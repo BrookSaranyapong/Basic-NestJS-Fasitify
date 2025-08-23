@@ -25,7 +25,7 @@ describe('ProductsService', () => {
     const found = await service.findOne(productsData.id);
     expect(found.name).toBe('iphone');
 
-    // expect(found.name).toBe('iphone');
+    // expect(found.name).toBe('iphone'); เปรียบเทียบสิ่งที่เราสร้าง ว่าตรงกับที่ของที่เรากำหนดหรือเปล่า
     // expect(productsData).toEqual(found); นำผลลัพธ์ กับ ของที่สร้างแล้วมีเปรียบเทียบกัน
   });
 
