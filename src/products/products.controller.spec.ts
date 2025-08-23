@@ -34,6 +34,10 @@ describe('ProductsController', () => {
     expect(productController).toBeDefined();
   });
 
+  // Controller ไม่ควรที่จะมี Bussiness Logic ในการ Test เยอะ
+  // Controller test สั้นเพราะ controller ทำหน้าที่แค่ delegate
+  // Business logic → ไป test ใน service
+  // Validation pipe → ไป test ใน E2E
   it('POST /products', async () => {
     expect(ProductsController).toBeDefined();
     const dto: CreateProductDto = {

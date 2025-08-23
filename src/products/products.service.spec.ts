@@ -17,15 +17,22 @@ describe('ProductsService', () => {
   it('create', async () => {
     const productsData = await service.create({
       name: 'iphone',
-      description: [{ model: 'iphone 11', battery: '3000 mAh' }],
-      price: 9900,
-      stock: 10,
+      description: [{ model: 'iphone 15', battery: '3349 mAh' }],
+      price: 20000,
+      stock: 5,
     });
-    expect(productsData.id).toBeDefined();
-    expect(productsData.name).toBe('iphone'); // เปรียบเทียบสิ่งที่เราสร้าง ว่าตรงกับที่ของที่เรากำหนดหรือเปล่า เคสนี้คือ iphone
 
+    expect(productsData).toEqual({
+      id: productsData.id,
+      name: 'iphone',
+      description: [{ model: 'iphone 15', battery: '3349 mAh' }],
+      price: 20000,
+      stock: 5,
+    }); //นำผลลัพธ์ กับ ของที่สร้างแล้วมีเปรียบเทียบกัน
+
+    // expect(productsData.id).toBeDefined();
+    // expect(productsData.name).toBe('iphone'); // เปรียบเทียบสิ่งที่เราสร้าง ว่าตรงกับชื่อของที่เรากำหนดหรือเปล่า
     // const found = await service.findOne(productsData.id); // ผลลัพธ์ของที่สร้าง
-    // expect(productsData).toEqual(found); นำผลลัพธ์ กับ ของที่สร้างแล้วมีเปรียบเทียบกัน
   });
 
   it('update', async () => {
