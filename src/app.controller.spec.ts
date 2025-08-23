@@ -14,9 +14,19 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
+  describe('getHomeAPI', () => {
+    it('should return "v1.0.0"', () => {
+      const data = {
+        version: 'v1.0.0',
+        message: 'NestJS API running...',
+      };
+      expect(appController.getHomeAPI()).toEqual(data);
+    });
+  });
+
+  describe('getHelloAPI', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+      expect(appController.getHello()).toBe('Hello NestJS!');
     });
   });
 });

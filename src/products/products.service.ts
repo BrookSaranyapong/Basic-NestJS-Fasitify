@@ -1,30 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Product } from './types';
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
-  }
+  private seq = 1;
+  private items: Product[] = [];
 
-  findAll() {
-    return {
-      message: 'product all',
-      value: 123,
-      statusCode: 200,
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    const item: Product = {
+      id: this.seq++,
+      ...createProductDto,
     };
+    this.items.push(item);
+    return item;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findAll(): Product[] {
+    return this.items;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async findOne(id: number): Product {
+    const found = this.items.find((i) => i.id === id);
+    if (!found) throw new NotFoundException('Product not found');
+    return found;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async update(id: number, updateProductDto: UpdateProductDto): Product {
+    const idx = this.items.findIndex((i) => i.id === id);
+    if (idx < 0) throw new NotFoundException(`Product not found`);
+    this.items[idx] = { ...this.items[idx], ...updateProductDto };
+    console.log(this.items[idx]);
+    return this.items[idx];
+  }
+
+  async remove(id: number): void {
+    const before = this.items.length;
+    this.items = this.items.filter((i) => i.id !== id);
+    if (this.items.length === before)
+      throw new NotFoundException('Product not found');
   }
 }
