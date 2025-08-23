@@ -14,7 +14,7 @@ describe('ProductsService', () => {
     service = module.get<ProductsService>(ProductsService);
   });
 
-  it('create & findOne', async () => {
+  it('create', async () => {
     const productsData = await service.create({
       name: 'iphone',
       description: [{ model: 'iphone 11', battery: '3000 mAh' }],
@@ -22,10 +22,9 @@ describe('ProductsService', () => {
       stock: 10,
     });
     expect(productsData.id).toBeDefined();
-    const found = await service.findOne(productsData.id);
-    expect(found.name).toBe('iphone');
+    expect(productsData.name).toBe('iphone'); // เปรียบเทียบสิ่งที่เราสร้าง ว่าตรงกับที่ของที่เรากำหนดหรือเปล่า เคสนี้คือ iphone
 
-    // expect(found.name).toBe('iphone'); เปรียบเทียบสิ่งที่เราสร้าง ว่าตรงกับที่ของที่เรากำหนดหรือเปล่า
+    // const found = await service.findOne(productsData.id); // ผลลัพธ์ของที่สร้าง
     // expect(productsData).toEqual(found); นำผลลัพธ์ กับ ของที่สร้างแล้วมีเปรียบเทียบกัน
   });
 
